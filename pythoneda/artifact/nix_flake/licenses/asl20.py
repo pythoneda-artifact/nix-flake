@@ -1,9 +1,9 @@
 """
-pythoneda/shared/nix_flake/licenses/gpl3.py
+pythoneda/artifact/nix_flake/licenses/asl20.py
 
-This file defines the GPL3 class.
+This file defines the Asl20 class.
 
-Copyright (C) 2023-today rydnr's pythoneda-shared-nix-flake/shared
+Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,23 +21,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from pythoneda.shared.nix_flake import License
 
 
-class Gpl3(License):
+class Asl20(License):
 
     """
-    Represents the GPL license, version 3 or later.
+    Represents the Apache Software license, 2.0
 
-    Class name: Gpl3
+    Class name: Asl20
 
     Responsibilities:
-        - Provide information about the GPLv3 license.
+        - Provide information about the ASL 2.0 license.
 
     Collaborators:
         - None
     """
-
     def __init__(self, copyrightYear: int, copyrightHolder: str, url: str):
         """
-        Creates a new Gpl3 instance.
+        Creates a new Asl20 instance.
         :param copyrightYear: The copyright year.
         :type copyrightYear: int
         :param copyrightHolder: The copyright holder.
@@ -46,16 +45,13 @@ class Gpl3(License):
         :type url: str
         """
         super().__init__(
-            f""" GNU GENERAL PUBLIC LICENSE
- Version 3, 29 June 2007
+            f""" Apache License 2.0
 
  Copyright (C) {copyrightYear} {copyrightHolder} {url}
 
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-"""
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+""",
         )
 
     @classmethod
@@ -65,4 +61,4 @@ class Gpl3(License):
         :return: Such id.
         :rtype: str
         """
-        return "gpl3"
+        return "asl20"

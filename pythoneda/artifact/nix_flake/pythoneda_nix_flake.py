@@ -1,9 +1,9 @@
 """
-pythoneda/shared/nix_flake/pythoneda_nix_flake.py
+pythoneda/artifact/nix_flake/pythoneda_nix_flake.py
 
 This file defines the PythonedaNixFlake class.
 
-Copyright (C) 2023-today rydnr's pythoneda-shared-nix-flake/shared
+Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from datetime import datetime
 from path import Path
 from pythoneda import attribute
-from pythoneda.shared.nix_flake import FlakeUtilsInput, NixFlake, NixFlakeInput, Nixos2305Input, PythonedaSharedPythonedaBannerInput, PythonedaSharedPythonedaDomainInput
+from .flake_utils_input import FlakeUtilsInput
+from .nix_flake import NixFlake
+from .nix_flake_input import NixFlakeInput
+from .nixos_2305_input import Nixos2305Input
+from .pythoneda_shared_pythoneda_banner_input import PythonedaSharedPythonedaBannerInput
+from .pythoneda_shared_pythoneda_domain_input import PythonedaSharedPythonedaDomainInput
 from typing import List
 
 class PythonedaNixFlake(NixFlake):

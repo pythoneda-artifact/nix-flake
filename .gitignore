@@ -1,8 +1,7 @@
+__pycache__
 bin/
 dist/
 lib/
 lib64
-__pycache__
 pyvenv.cfg
 result
-.wip

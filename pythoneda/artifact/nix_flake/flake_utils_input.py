@@ -1,9 +1,9 @@
 """
-pythoneda/shared/nix_flake/nixos_2305_input.py
+pythoneda/artifact/nix_flake/flake_utils_input.py
 
-This file defines the Nikos2305Input class.
+This file defines the FlakeUtilsInput class.
 
-Copyright (C) 2023-today rydnr's pythoneda-shared-nix-flake/shared
+Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,17 +18,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from pythoneda.shared.nix_flake import NixFlakeInput
+from .nix_flake_input import NixFlakeInput
 
-class Nixos2305Input(NixFlakeInput):
+class FlakeUtilsInput(NixFlakeInput):
 
     """
-    Represents the input for Nixos 23.05.
+    Represents the input for flake-utils.
 
-    Class name: Nixos2305Input
+    Class name: FlakeUtilsInput
 
     Responsibilities:
-        - Represents the information about Nixos 23.05 flake.
+        - Represents the information about flake-utils flake.
 
     Collaborators:
         - None
@@ -36,6 +36,6 @@ class Nixos2305Input(NixFlakeInput):
 
     def __init__(self):
         """
-        Creates a new Nixos2305Input instance.
+        Creates a new FlakeUtilsInput instance.
         """
-        super().__init__("nixos", "github:NixOS/nixpkgs/nixos-23.05")
+        super().__init__("flake-utils", "github:numtide/flake-utils/v1.0.0")

@@ -1,9 +1,9 @@
 """
-pythoneda/shared/nix_flake/nix_flake_input.py
+pythoneda/artifact/nix_flake/nix_flake_input.py
 
 This file declares the NixFlakeInput class.
 
-Copyright (C) 2023-today rydnr's pythoneda-shared-nix-flake/shared
+Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

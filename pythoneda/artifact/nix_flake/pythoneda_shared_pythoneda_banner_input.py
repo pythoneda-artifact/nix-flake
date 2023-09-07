@@ -1,9 +1,9 @@
 """
-pythoneda/shared/nix_flake/pythoneda_shared_pythoneda_banner_input.py
+pythoneda/artifact/nix_flake/pythoneda_shared_pythoneda_banner_input.py
 
 This file defines the PythonedaSharedPythonedaBannerInput class.
 
-Copyright (C) 2023-today rydnr's pythoneda-shared-nix-flake/shared
+Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from pythoneda.shared.nix_flake import FlakeUtilsInput, NixFlakeInput, Nixos2305Input
+from .flake_utils_input import FlakeUtilsInput
+from .nix_flake_input import NixFlakeInput
+from .nixos_2305_input import Nixos2305Input
 
 class PythonedaSharedPythonedaBannerInput(NixFlakeInput):
 

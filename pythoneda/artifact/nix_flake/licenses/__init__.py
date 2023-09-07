@@ -1,7 +1,7 @@
 """
-pythoneda/__init__.py
+pythoneda/artifact/nix_flake/licenses/__init__.py
 
-This file ensures pythoneda is a namespace.
+This file ensures pythoneda.artifact.nix_flake.licenses is a package.
 
 Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
@@ -18,4 +18,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-__path__ = __import__('pkgutil').extend_path(__path__, __name__)
+__path__ = __import__("pkgutil").extend_path(__path__, __name__)
+
+from .gpl3 import Gpl3
+from .mit import Mit
+from .asl20 import Asl20

@@ -1,9 +1,9 @@
 """
-pythoneda/shared/nix_flake/licenses/__init__.py
+pythoneda/artifact/nix_flake/nixos_2305_input.py
 
-This file ensures pythoneda.shared.nix_flake.licenses is a package.
+This file defines the Nikos2305Input class.
 
-Copyright (C) 2023-today rydnr's pythoneda-shared-nix-flake/shared
+Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,8 +18,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-__path__ = __import__("pkgutil").extend_path(__path__, __name__)
+from .nix_flake_input import NixFlakeInput
 
-from .gpl3 import Gpl3
-from .mit import Mit
-from .asl20 import Asl20
+class Nixos2305Input(NixFlakeInput):
+
+    """
+    Represents the input for Nixos 23.05.
+
+    Class name: Nixos2305Input
+
+    Responsibilities:
+        - Represents the information about Nixos 23.05 flake.
+
+    Collaborators:
+        - None
+    """
+
+    def __init__(self):
+        """
+        Creates a new Nixos2305Input instance.
+        """
+        super().__init__("nixos", "github:NixOS/nixpkgs/nixos-23.05")

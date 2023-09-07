@@ -1,9 +1,9 @@
 """
-pythoneda/shared/nix_flake/nix_flake.py
+pythoneda/artifact/nix_flake/nix_flake.py
 
 This file defines the NixFlake class.
 
-Copyright (C) 2023-today rydnr's pythoneda-shared-nix-flake/shared
+Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from .license import License
 import asyncio
 import os
 from path import Path
 from pythoneda import attribute, primary_key_attribute, Entity
 from pythoneda.shared.git import GitAdd, GitInit
-from pythoneda.shared.nix_flake import License
 from stringtemplate3 import PathGroupLoader, StringTemplateGroup
 import subprocess
 import tempfile
