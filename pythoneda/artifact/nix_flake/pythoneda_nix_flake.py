@@ -43,7 +43,16 @@ class PythonedaNixFlake(NixFlake):
     Collaborators:
         - pythoneda.shared.nix_flake.NixFlake
     """
-    def __init__(self, name:str, version:str, inputs:List, outputFolder:str, description:str, homepage:str, archRole:str, pescioSpace:str, hexagonalLayer:str):
+    def __init__(
+            self,
+            name:str,
+            version:str,
+            inputs:List,
+            description:str,
+            homepage:str,
+            archRole:str,
+            pescioSpace:str,
+            hexagonalLayer:str):
         """
         Creates a new NixFlake instance.
         :param name: The name of the flake.
@@ -52,8 +61,6 @@ class PythonedaNixFlake(NixFlake):
         :type version: str
         :param inputs: The inputs.
         :type inputs: List[pythoneda.shared.nix_flake.NixFlakeInput]
-        :param outputFolder: The output folder.
-        :type outputFolder: str
         :param description: The flake description.
         :type description: str
         :param homepage: The project's homepage.
@@ -65,14 +72,14 @@ class PythonedaNixFlake(NixFlake):
         :param hexagonalLayer: The type of hexagonal layer. See pythoneda.application.HexagonalLayer.
         :type hexagonalLayer: str
         """
-        aux_inputs = [Nixos2305Input(), FlakeUtilsInput(), PythonedaSharedPythonedaBannerInput()]
+        nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
+        aux_inputs = [ nix_flake_repo.latest_Nixos(), nix_flake_repo.latest_FlakeUtils(), nix_flake_repo.latest_PythonedaSharedPythonedaBanner() ]
         if name != 'pythoneda-shared-pythoneda-domain':
-            aux_inputs.append(PythonedaSharedPythonedaDomainInput())
+            aux_inputs.append(nix_flake_repo.latest_PythonedaSharedPythonedaDomain())
         super().__init__(
             name,
             version,
             list(set(inputs) | set(aux_inputs)),
-            outputFolder,
             "pythoneda",
             description,
             homepage,
@@ -91,7 +98,7 @@ class PythonedaNixFlake(NixFlake):
         :return: An empty instance.
         :rtype: pythoneda.ValueObject
         """
-        return cls(None, None, [], None, None, None, None, None, None)
+        return cls(None, None, [], None, None, None, None, None)
 
     @property
     @attribute

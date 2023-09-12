@@ -1,7 +1,7 @@
 """
-pythoneda/artifact/nix_flake/flake_utils_input.py
+pythoneda/artifact/nix_flake/jupyter/__init__.py
 
-This file defines the FlakeUtilsInput class.
+This file ensures pythoneda.artifact.nix_flake.jupyter is a package.
 
 Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
@@ -18,24 +18,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from .nix_flake_input import NixFlakeInput
+__path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
-class FlakeUtilsInput(NixFlakeInput):
-
-    """
-    Represents the input for flake-utils.
-
-    Class name: FlakeUtilsInput
-
-    Responsibilities:
-        - Represents the information about flake-utils flake.
-
-    Collaborators:
-        - None
-    """
-
-    def __init__(self):
-        """
-        Creates a new FlakeUtilsInput instance.
-        """
-        super().__init__("flake-utils", "github:numtide/flake-utils/v1.0.0")
+from .jupyter_nix_flake import JupyterNixFlake
