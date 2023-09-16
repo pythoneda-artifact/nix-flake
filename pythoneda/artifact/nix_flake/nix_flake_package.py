@@ -65,11 +65,11 @@ class NixFlakePackage(EventListener):
         :param event: The event.
         :type event: pythoneda.shared.artifact_changes.events.ChangeStagingCodeDescribed
         """
-        cls.logger("pythoneda.artifact.nix_flake.NixFlakePackage").debug(f"Received {type(event)}")
-        nix_flake = cls.resolve_nix_flake(code_request.nix_flake_spec)
+        cls.logger("pythoneda.artifact.nix_flake.NixFlakePackage").info(f"Received {type(event)}")
+        nix_flake = cls.resolve_nix_flake(event.code_request)
         result = ChangeStagingCodePackaged(nix_flake, event.id)
 
-        cls.logger("pythoneda.artifact.nix_flake.NixFlakePackage").debug(f"Emitting {type(result)}")
+        cls.logger("pythoneda.artifact.nix_flake.NixFlakePackage").info(f"Emitting {type(result)}")
         await Ports.instance().resolve(EventEmitter).emit(result)
         return result
 
@@ -82,12 +82,5 @@ class NixFlakePackage(EventListener):
         :return: A compatible NixFlake.
         :rtype: pythoneda.shared.nix_flake.NixFlake
         """
-        nix_flake_repo = await Ports.instance().resolve(NixFlakeRepo)
-        """
-        JupyterNixFlake(
-            code_request,
-            "code_request",
-            datetime.now().strftime("%Y%m%d%H%M%S"),
-            "A nix flake to run a code request"),
-        """
-        return nix_flake_repo.resolve(code_request.nix_flake_spec)
+        nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
+        return nix_flake_repo.resolve(codeRequest.nix_flake_spec())
