@@ -1,5 +1,5 @@
 """
-pythoneda/artifact/nix_flake/jupyter/jupyterlab_code_request_nix_flake_factory.py
+pythoneda/artifact/nix_flake/jupyterlab/jupyterlab_code_request_nix_flake_factory.py
 
 This file defines the JupyterlabCodeRequestNixFlakeFactory class.
 
@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from pythoneda import BaseObject, Ports
 from pythoneda.artifact.nix_flake import NixFlakeRepo
 from pythoneda.shared.code_requests import PythonedaDependency
-from pythoneda.shared.code_requests.jupyter import JupyterlabCodeRequest, JupyterlabCodeRequestNixFlake
+from pythoneda.shared.code_requests.jupyterlab import JupyterlabCodeRequest, JupyterlabCodeRequestNixFlake
 from pythoneda.shared.nix_flake import NixFlakeSpec
 from typing import Dict, List
 
@@ -36,7 +36,7 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
         - Is able to build JupyterlabCodeRequestNixFlake instances.
 
     Collaborators:
-        - pythoneda.shared.code_requests.jupyter.JupyterlabCodeRequestNixFlake
+        - pythoneda.shared.code_requests.jupyterlab.JupyterlabCodeRequestNixFlake
     """
     _singleton = None
 
@@ -63,7 +63,7 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
         """
         Creates a new JupyterlabNixFlake instance.
         :param codeRequest: The code request.
-        :type codeRequest: pythoneda.shared.code_requests.jupyter.JupyterlabCodeRequest
+        :type codeRequest: pythoneda.shared.code_requests.jupyterlab.JupyterlabCodeRequest
         :param version: The version of the flake.
         :type version: str
         :param inputs: The flake inputs.

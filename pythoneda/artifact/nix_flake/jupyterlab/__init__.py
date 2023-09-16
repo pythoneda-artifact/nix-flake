@@ -1,7 +1,7 @@
 """
-pythoneda/artifact/nix_flake/jupyter/__init__.py
+pythoneda/artifact/nix_flake/jupyterlab/__init__.py
 
-This file ensures pythoneda.artifact.nix_flake.jupyter is a package.
+This file ensures pythoneda.artifact.nix_flake.jupyterlab is a package.
 
 Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
