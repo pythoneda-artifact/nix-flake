@@ -94,8 +94,7 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
             nix_flake_repo.latest_Nixos(),
             nix_flake_repo.latest_FlakeUtils(),
             nix_flake_repo.latest_PythonedaSharedPythonedaBanner(),
-            nix_flake_repo.latest_Jupyterlab(),
-            nix_flake_repo.latest_Jupyterlab_for_code_requests(codeRequest)
+            nix_flake_repo.latest_Jupyterlab()
         ]
         for dep in codeRequest.dependencies:
             deps = []
@@ -105,7 +104,7 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
                     deps.append(nix_flake_repo.latest_PythonedaSharedPythonedaDomain())
             resolved_flake = nix_flake_repo.resolve(NixFlakeSpec(dep.name, dep.version, dep.url))
             if resolved_flake is None:
-                cls.logger("pythoneda.artifact.nix_flake.jupyter.JupyterlabNixFlakeFactory").error(f"Cannot resolve flake for {dep.name}-{dep.version}")
+                JupyterlabCodeRequestNixFlakeFactory.logger().error(f"Cannot resolve flake for {dep.name}-{dep.version}")
             else:
                 result.append(resolved_flake)
         return list(set(result))

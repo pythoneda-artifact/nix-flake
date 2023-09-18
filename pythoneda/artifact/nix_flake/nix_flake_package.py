@@ -65,11 +65,11 @@ class NixFlakePackage(EventListener):
         :param event: The event.
         :type event: pythoneda.shared.artifact_changes.events.ChangeStagingCodeDescribed
         """
-        cls.logger("pythoneda.artifact.nix_flake.NixFlakePackage").info(f"Received {type(event)}")
+        NixFlakePackage.logger().info(f"Received {type(event)}")
         nix_flake = cls.resolve_nix_flake(event.code_request)
         result = ChangeStagingCodePackaged(nix_flake, event.id)
 
-        cls.logger("pythoneda.artifact.nix_flake.NixFlakePackage").info(f"Emitting {type(result)}")
+        NixFlakePackage.logger().info(f"Emitting {type(result)}")
         await Ports.instance().resolve(EventEmitter).emit(result)
         return result
 
