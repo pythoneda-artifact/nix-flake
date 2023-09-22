@@ -1,7 +1,7 @@
 """
-pythoneda/artifact/nix_flake/jupyterlab/jupyterlab_code_request_nix_flake_factory.py
+pythoneda/artifact/nix_flake/code_execution_nix_flake_factory.py
 
-This file defines the JupyterlabCodeRequestNixFlakeFactory class.
+This file defines the CodeExecutionNixFlakeFactory class.
 
 Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
@@ -21,28 +21,29 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from pythoneda import BaseObject, Ports
 from pythoneda.artifact.nix_flake import NixFlakeRepo
 from pythoneda.shared.code_requests import PythonedaDependency
-from pythoneda.shared.code_requests.jupyterlab import JupyterlabCodeRequest, JupyterlabCodeRequestNixFlake
+from pythoneda.shared.code_requests import CodeExecutionNixFlake
+from pythoneda.shared.code_requests.jupyterlab import JupyterlabCodeRequest
 from pythoneda.shared.nix_flake import NixFlakeSpec
 from typing import Dict, List
 
-class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
+class CodeExecutionNixFlakeFactory(BaseObject):
 
     """
-    A factory for Jupyterlab's Nix flakes.
+    A factory for Nix flakes to execute code.
 
-    Class name: JupyterlabCodeRequestNixFlakeFactory
+    Class name: CodeExecutionNixFlakeFactory
 
     Responsibilities:
-        - Is able to build JupyterlabCodeRequestNixFlake instances.
+        - Is able to build CodeExecutionNixFlake instances.
 
     Collaborators:
-        - pythoneda.shared.code_requests.jupyterlab.JupyterlabCodeRequestNixFlake
+        - pythoneda.shared.code_requests.CodeExecutionNixFlake
     """
     _singleton = None
 
     def __init__(self):
         """
-        Creates a new JupyterlabCodeRequestNixFlake instance.
+        Creates a new CodeExecutionNixFlake instance.
         """
         super().__init__()
 
@@ -59,9 +60,9 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
 
         return cls._singleton
 
-    def create(self, codeRequest:JupyterlabCodeRequest, inputs:List):
+    def create(self, codeRequest:JupyterlabCodeRequest, inputs:List) -> CodeExecutionNixFlake:
         """
-        Creates a new JupyterlabNixFlake instance.
+        Creates a new CodeExecutionNixFlake instance.
         :param codeRequest: The code request.
         :type codeRequest: pythoneda.shared.code_requests.jupyterlab.JupyterlabCodeRequest
         :param inputs: The flake inputs.
@@ -69,10 +70,8 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
         :return: The Nix flake.
         :rtype: pythoneda.shared.nix_flake.NixFlake
         """
-        return JupyterlabCodeRequestNixFlake(
-            codeRequest,
-            "latest",
-            self.__class__.dependencies_to_inputs(inputs, codeRequest))
+        return CodeExecutionNixFlake(
+            codeRequest, self.__class__.dependencies_to_inputs(inputs, codeRequest))
 
     @classmethod
     def dependencies_to_inputs(cls, inputs:List, codeRequest:JupyterlabCodeRequest) -> List:
@@ -91,8 +90,7 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
         pythonedaDependencies = [
             nix_flake_repo.latest_Nixos(),
             nix_flake_repo.latest_FlakeUtils(),
-            nix_flake_repo.latest_PythonedaSharedPythonedaBanner(),
-            nix_flake_repo.latest_Jupyterlab()
+            nix_flake_repo.latest_PythonedaSharedPythonedaBanner()
         ]
         for dep in codeRequest.dependencies:
             deps = []
@@ -102,7 +100,7 @@ class JupyterlabCodeRequestNixFlakeFactory(BaseObject):
                     deps.append(nix_flake_repo.latest_PythonedaSharedPythonedaDomain())
             resolved_flake = nix_flake_repo.resolve(NixFlakeSpec(dep.name, dep.version, dep.url))
             if resolved_flake is None:
-                JupyterlabCodeRequestNixFlakeFactory.logger().error(f"Cannot resolve flake for {dep.name}-{dep.version}")
+                CodeExecutionNixFlakeFactory.logger().error(f"Cannot resolve flake for {dep.name}-{dep.version}")
             else:
                 result.append(resolved_flake)
         return list(set(result))

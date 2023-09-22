@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import abc
 from pythoneda import Repo
-from pythoneda.shared.code_requests import CodeRequest
+from pythoneda.shared.code_requests import CodeExecutionNixFlake, CodeRequest
 from pythoneda.shared.code_requests.jupyterlab import JupyterlabCodeRequestNixFlake
 from pythoneda.shared.nix_flake import FlakeUtilsNixFlake, NixFlake, NixFlakeSpec, NixosNixFlake, PythonedaSharedPythonedaBannerNixFlake, PythonedaSharedPythonedaDomainNixFlake
 from typing import Dict, List
@@ -58,6 +58,34 @@ class NixFlakeRepo(Repo, abc.ABC):
             self.latest_PythonedaSharedPythonedaDomain()
         ]
 
+    def latest_Cachetools(self) -> NixFlake:
+        """
+        Retrieves the latest Nix flake for grpcio.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_Cachetools_version(self.latest_Cachetools_version())
+
+    @abc.abstractmethod
+    def latest_Cachetools_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for grpcio.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_Cachetools_version(self, version:str) -> NixFlake:
+        """
+        Retrieves the latest version of the nix flake for cachetools.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.artifact.nix_flake.NixFlake
+        """
+        pass
+
     def latest_DbusNext(self) -> NixFlake:
         """
         Retrieves the latest version of the Nix flake for dbus-next.
@@ -86,31 +114,14 @@ class NixFlakeRepo(Repo, abc.ABC):
         """
         pass
 
-    def latest_Grpcio(self) -> NixFlake:
+    @abc.abstractmethod
+    def latest_code_execution(self, codeRequest:CodeRequest) -> CodeExecutionNixFlake:
         """
-        Retrieves the latest Nix flake for grpcio.
+        Retrieves the latest version of the nix flake for executing code.
+        :param codeRequest: The code request.
+        :type codeRequest: pythoneda.shared.code_requests.CodeRequest
         :return: Such flake.
-        :rtype: pythoneda.shared.nix_flake.NixFlake
-        """
-        return self.find_Grpcio_version(self.latest_Grpcio_version())
-
-    @abc.abstractmethod
-    def latest_Grpcio_version(self) -> str:
-        """
-        Retrieves the version of the latest Nix flake for grpcio.
-        :return: Such version.
-        :rtype: str
-        """
-        pass
-
-    @abc.abstractmethod
-    def find_Grpcio_version(self, version:str) -> NixFlake:
-        """
-        Retrieves the latest version of the nix flake for grpcio.
-        :param version: The version.
-        :type version: str
-        :return: Such flake, or None if not found.
-        :rtype: pythoneda.artifact.nix_flake.NixFlake
+        :rtype: pythoneda.shared.code_requests.CodeExecutionNixFlake
         """
         pass
 
@@ -142,34 +153,69 @@ class NixFlakeRepo(Repo, abc.ABC):
         """
         pass
 
-    def latest_Jupyterlab_for_code_requests(self, codeRequest:CodeRequest) -> JupyterlabCodeRequestNixFlake:
+    def latest_Grpcio(self) -> NixFlake:
         """
-        Retrieves the latest version of the nix flake for Jupyterlab.
-        :param codeRequest: The code request.
-        :type codeRequest: pythoneda.shared.code_requests.CodeRequest
+        Retrieves the latest Nix flake for grpcio.
         :return: Such flake.
-        :rtype: pythoneda.shared.code_requests.jupyter.JupyterlabCodeRequestNixFlake
+        :rtype: pythoneda.shared.nix_flake.NixFlake
         """
-        return self.find_Jupyterlab_for_code_requests_version(self.latest_Jupyterlab_for_code_requests_version(), codeRequest)
+        return self.find_Grpcio_version(self.latest_Grpcio_version())
 
     @abc.abstractmethod
-    def latest_Jupyterlab_for_code_requests_version(self) -> str:
+    def latest_Grpcio_version(self) -> str:
         """
-        Retrieves the version of the latest Nix flake for Jupyterlab for code requests.
+        Retrieves the version of the latest Nix flake for grpcio.
         :return: Such version.
         :rtype: str
         """
         pass
 
     @abc.abstractmethod
-    def find_Jupyterlab_for_code_requests_version(self, version:str, codeRequest:CodeRequest) -> JupyterlabCodeRequestNixFlake:
+    def find_Grpcio_version(self, version:str) -> NixFlake:
         """
-        Retrieves the latest version of the nix flake for Jupyterlab for code requests.
+        Retrieves the latest version of the nix flake for grpcio.
         :param version: The version.
         :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.artifact.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_Joblib(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for Joblib.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_Joblib_version(self.latest_Joblib_version())
+
+    @abc.abstractmethod
+    def latest_Joblib_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for Joblib.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_Joblib_version(self, version:str) -> str:
+        """
+        Retrieves a specific version of the Nix flake for Joblib.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    @abc.abstractmethod
+    def latest_Jupyterlab_for_code_requests(self, codeRequest:CodeRequest) -> JupyterlabCodeRequestNixFlake:
+        """
+        Retrieves the latest version of the nix flake for Jupyterlab.
         :param codeRequest: The code request.
         :type codeRequest: pythoneda.shared.code_requests.CodeRequest
-        :return: Such flake, or None if not found.
+        :return: Such flake.
         :rtype: pythoneda.shared.code_requests.jupyter.JupyterlabCodeRequestNixFlake
         """
         pass
@@ -251,6 +297,314 @@ class NixFlakeRepo(Repo, abc.ABC):
     def find_Nixos_version(self, version:str) -> NixosNixFlake:
         """
         Retrieves a specific version of the NixOS flake.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactCodeRequestApplication(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/code-request-application
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactCodeRequestApplication_version(self.latest_PythonedaArtifactCodeRequestApplication_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactCodeRequestApplication_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/code-request-application.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactCodeRequestApplication_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/code-request-application
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactCodeRequestInfrastructure(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/code-request-infrastructure
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactCodeRequestInfrastructure_version(self.latest_PythonedaArtifactCodeRequestInfrastructure_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactCodeRequestInfrastructure_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/code-request-infrastructure.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactCodeRequestInfrastructure_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/code-request-infrastrucuter
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactGit(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/git
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactGit_version(self.latest_PythonedaActifactGit_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactGit_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/git.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactGit_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/git
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactGitApplication(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/git-application
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactGitApplication_version(self.latest_PythonedaActifactGitApplication_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactGitApplication_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/git-application.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactGitApplication_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/git-application
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactGitInfrastructure(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/git-infrastructure
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactGitInfrastructure_version(self.latest_PythonedaActifactGitInfrastructure_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactGitInfrastructure_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/git-infrastructure.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactGitInfrastructure_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/git-infrastructure
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactNixFlake(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/nix-flake
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactNixFlake_version(self.latest_PythonedaActifactNixFlake_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactNixFlake_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/nix-flake.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactNixFlake_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/nix-flake
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactNixFlakeApplication(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/nix-flake-application
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactNixFlakeApplication_version(self.latest_PythonedaActifactNixFlakeApplication_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactNixFlakeApplication_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/nix-flake-application.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactNixFlakeApplication_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/nix-flake-application
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaArtifactNixFlakeInfrastructure(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-artifact/nix-flake-infrastructure
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaArtifactNixFlakeInfrastructure_version(self.latest_PythonedaActifactNixFlakeInfrastructure_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaArtifactNixFlakeInfrastructure_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-artifact/nix-flake-infrastructure.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaArtifactNixFlakeInfrastructure_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-artifact/nix-flake-infrastructure
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaRealmRydnrApplication(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-realm-rydnr/application.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaRealmRydnrApplication_version(self.latest_PythonedaRealmRydnrApplication_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaRealmRydnrApplication_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-realm-rydnr/application.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaRealmRydnrApplication_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-realm-rydnr/application
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaRealmRydnrInfrastructure(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-realm-rydnr/infrastructure.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaRealmRydnrInfrastructure_version(self.latest_PythonedaRealmRydnrInfrastructure_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaRealmRydnrInfrastructure_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-realm-rydnr/infrastructure.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaRealmRydnrInfrastructure_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-realm-rydnr/infrastructure
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaRealmRydnrRealm(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-realm-rydnr/realm.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaRealmRydnrRealm_version(self.latest_PythonedaRealmRydnrRealm_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaRealmRydnrRealm_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-realm-rydnr/realm.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaRealmRydnrRealm_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-realm-rydnr/realm
         :param version: The version.
         :type version: str
         :return: Such flake, or None if not found.
@@ -391,6 +745,34 @@ class NixFlakeRepo(Repo, abc.ABC):
     def find_PythonedaSharedCodeRequestsEventsInfrastructure_version(self, version:str) -> NixFlake:
         """
         Retrieves a specific version of the Nix flake for pythoneda-shared-code-requests/events-infrastructure.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_PythonedaSharedCodeRequestsJupyterlab(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for pythoneda-shared-code-requests/jupyterlab.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_PythonedaSharedCodeRequestsJupyterlab_version(self.latest_PythonedaSharedCodeRequestsJupyterlab_version())
+
+    @abc.abstractmethod
+    def latest_PythonedaSharedCodeRequestsJupyterlab_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for pythoneda-shared-code-requests/jupyterlab.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_PythonedaSharedCodeRequestsJupyterlab_version(self, version:str) -> NixFlake:
+        """
+        Retrieves a specific version of the Nix flake for pythoneda-shared-code-requests/jupyterlab.
         :param version: The version.
         :type version: str
         :return: Such flake, or None if not found.
@@ -594,7 +976,7 @@ class NixFlakeRepo(Repo, abc.ABC):
         """
         pass
 
-    def latest_Requests_version(self) -> NixFlake:
+    def latest_Requests(self) -> NixFlake:
         """
         Retrieves the latest Nix flake for requests.
         :return: Such version.

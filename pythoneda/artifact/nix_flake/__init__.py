@@ -22,3 +22,4 @@ __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
 from .nix_flake_repo import NixFlakeRepo
 from .nix_flake_package import NixFlakePackage
+from .code_execution_nix_flake_factory import CodeExecutionNixFlakeFactory

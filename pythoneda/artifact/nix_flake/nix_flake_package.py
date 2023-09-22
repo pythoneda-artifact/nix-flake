@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from .nix_flake_repo import NixFlakeRepo
 from pythoneda import listen, Event, EventEmitter, EventListener, Ports
 from pythoneda.shared.code_requests import CodeRequest
-from pythoneda.shared.artifact_changes.events import ChangeStagingCodeDescribed, ChangeStagingCodePackaged
-from pythoneda.shared.nix_flake import NixFlake
+from pythoneda.shared.artifact_changes.events import ChangeStagingCodeDescribed, ChangeStagingCodeExecutionRequested, ChangeStagingCodeExecutionPackaged, ChangeStagingCodePackaged
+from pythoneda.shared.nix_flake import NixFlake, NixFlakeSpec, NixFlakeSpecForExecution
 
 class NixFlakePackage(EventListener):
     """
@@ -74,6 +74,22 @@ class NixFlakePackage(EventListener):
         return result
 
     @classmethod
+    @listen(ChangeStagingCodeExecutionRequested)
+    async def listen_ChangeStagingCodeExecutionRequested(cls, event: ChangeStagingCodeExecutionRequested):
+        """
+        Gets notified of a ChangeStagingCodeExecutionRequested event.
+        :param event: The event.
+        :type event: pythoneda.shared.artifact_changes.events.ChangeStagingCodeExecutionRequested
+        """
+        NixFlakePackage.logger().info(f"Received {type(event)}")
+        nix_flake = cls.resolve_nix_flake_for_execution(event.code_request)
+        result = ChangeStagingCodeExecutionPackaged(nix_flake, event.id)
+
+        NixFlakePackage.logger().info(f"Emitting {type(result)}")
+        await Ports.instance().resolve(EventEmitter).emit(result)
+        return result
+
+    @classmethod
     def resolve_nix_flake(cls, codeRequest: CodeRequest) -> NixFlake:
         """
         Resolves a NixFlake based on the code request specification.
@@ -83,4 +99,16 @@ class NixFlakePackage(EventListener):
         :rtype: pythoneda.shared.nix_flake.NixFlake
         """
         nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
-        return nix_flake_repo.resolve(codeRequest.nix_flake_spec())
+        return nix_flake_repo.resolve(codeRequest.nix_flake_spec)
+
+    @classmethod
+    def resolve_nix_flake_for_execution(cls, codeRequest: CodeRequest) -> NixFlake:
+        """
+        Resolves a NixFlake based on the code request specification.
+        :param codeRequest: The code request.
+        :type codeRequest: pythoneda.shared.code_requests.CodeRequest
+        :return: A compatible NixFlake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
+        return nix_flake_repo.resolve(NixFlakeSpecForExecution(codeRequest.nix_flake_spec))
