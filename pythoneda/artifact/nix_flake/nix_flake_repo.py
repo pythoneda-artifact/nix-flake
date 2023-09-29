@@ -114,6 +114,34 @@ class NixFlakeRepo(Repo, abc.ABC):
         """
         pass
 
+    def latest_Dulwich(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for dulwich.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_Dulwich_version(self.latest_Dulwich_version())
+
+    @abc.abstractmethod
+    def latest_Dulwich_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for dulwich.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_Dulwich_version(self, version:str) -> NixFlake:
+        """
+        Retrieves the latest version of the nix flake for dulwich.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.artifact.nix_flake.NixFlake
+        """
+        pass
+
     @abc.abstractmethod
     def latest_code_execution(self, codeRequest:CodeRequest) -> CodeExecutionNixFlake:
         """
@@ -150,6 +178,34 @@ class NixFlakeRepo(Repo, abc.ABC):
         :type version: str
         :return: Such flake, or None if not found.
         :rtype: pythoneda.shared.nix_flake.FlakeUtilsNixFlake
+        """
+        pass
+
+    def latest_GitPython(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for GitPython.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_GitPython_version(self.latest_GitPython_version())
+
+    @abc.abstractmethod
+    def latest_GitPython_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for GitPython.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_GitPython_version(self, version:str) -> NixFlake:
+        """
+        Retrieves the latest version of the nix flake for GitPython.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.artifact.nix_flake.NixFlake
         """
         pass
 
@@ -301,6 +357,34 @@ class NixFlakeRepo(Repo, abc.ABC):
         :type version: str
         :return: Such flake, or None if not found.
         :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_Paramiko(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for paramiko.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_Paramiko_version(self.latest_Paramiko_version())
+
+    @abc.abstractmethod
+    def latest_Paramiko_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for paramiko.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_Paramiko_version(self, version:str) -> NixFlake:
+        """
+        Retrieves the latest version of the nix flake for paramiko.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.artifact.nix_flake.NixFlake
         """
         pass
 
@@ -997,6 +1081,34 @@ class NixFlakeRepo(Repo, abc.ABC):
     def find_Requests_version(self, version:str) -> NixFlake:
         """
         Retrieves the latest version of the nix flake for requests.
+        :param version: The version.
+        :type version: str
+        :return: Such flake, or None if not found.
+        :rtype: pythoneda.artifact.nix_flake.NixFlake
+        """
+        pass
+
+    def latest_Semver(self) -> NixFlake:
+        """
+        Retrieves the latest version of the Nix flake for semver.
+        :return: Such flake.
+        :rtype: pythoneda.shared.nix_flake.NixFlake
+        """
+        return self.find_Semver_version(self.latest_Semver_version())
+
+    @abc.abstractmethod
+    def latest_Semver_version(self) -> str:
+        """
+        Retrieves the version of the latest Nix flake for semver.
+        :return: Such version.
+        :rtype: str
+        """
+        pass
+
+    @abc.abstractmethod
+    def find_Semver_version(self, version:str) -> NixFlake:
+        """
+        Retrieves the latest version of the nix flake for semver.
         :param version: The version.
         :type version: str
         :return: Such flake, or None if not found.
