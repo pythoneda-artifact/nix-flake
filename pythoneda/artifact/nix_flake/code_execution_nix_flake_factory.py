@@ -18,10 +18,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from .nix_flake_repo import NixFlakeRepo
 from pythoneda import BaseObject, Ports
-from pythoneda.artifact.nix_flake import NixFlakeRepo
-from pythoneda.shared.code_requests import PythonedaDependency
-from pythoneda.shared.code_requests import CodeExecutionNixFlake
+from pythoneda.shared.code_requests import CodeExecutionNixFlake, PythonedaDependency
 from pythoneda.shared.code_requests.jupyterlab import JupyterlabCodeRequest
 from pythoneda.shared.nix_flake import NixFlakeSpec
 from typing import Dict, List
