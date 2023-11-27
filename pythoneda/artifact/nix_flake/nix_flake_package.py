@@ -21,8 +21,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from .nix_flake_repo import NixFlakeRepo
 from pythoneda import listen, Event, EventEmitter, EventListener, Ports
 from pythoneda.shared.code_requests import CodeRequest
-from pythoneda.shared.artifact_changes.events import ChangeStagingCodeDescribed, ChangeStagingCodeExecutionRequested, ChangeStagingCodeExecutionPackaged, ChangeStagingCodePackaged
+from pythoneda.shared.artifact.events import (
+    ChangeStagingCodeDescribed,
+    ChangeStagingCodeExecutionRequested,
+    ChangeStagingCodeExecutionPackaged,
+    ChangeStagingCodePackaged,
+)
 from pythoneda.shared.nix_flake import NixFlake, NixFlakeSpec, NixFlakeSpecForExecution
+
 
 class NixFlakePackage(EventListener):
     """
@@ -63,7 +69,7 @@ class NixFlakePackage(EventListener):
         """
         Gets notified of a ChangeStagingCodeDescribed event.
         :param event: The event.
-        :type event: pythoneda.shared.artifact_changes.events.ChangeStagingCodeDescribed
+        :type event: pythoneda.shared.artifact.events.ChangeStagingCodeDescribed
         """
         NixFlakePackage.logger().info(f"Received {type(event)}")
         nix_flake = cls.resolve_nix_flake(event.code_request)
@@ -75,7 +81,9 @@ class NixFlakePackage(EventListener):
 
     @classmethod
     @listen(ChangeStagingCodeExecutionRequested)
-    async def listen_ChangeStagingCodeExecutionRequested(cls, event: ChangeStagingCodeExecutionRequested):
+    async def listen_ChangeStagingCodeExecutionRequested(
+        cls, event: ChangeStagingCodeExecutionRequested
+    ):
         """
         Gets notified of a ChangeStagingCodeExecutionRequested event.
         :param event: The event.
@@ -111,4 +119,6 @@ class NixFlakePackage(EventListener):
         :rtype: pythoneda.shared.nix_flake.NixFlake
         """
         nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
-        return nix_flake_repo.resolve(NixFlakeSpecForExecution(codeRequest.nix_flake_spec))
+        return nix_flake_repo.resolve(
+            NixFlakeSpecForExecution(codeRequest.nix_flake_spec)
+        )
