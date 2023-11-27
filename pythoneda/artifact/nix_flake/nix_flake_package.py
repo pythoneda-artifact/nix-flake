@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from .nix_flake_repo import NixFlakeRepo
 from pythoneda import listen, Event, EventEmitter, EventListener, Ports
 from pythoneda.shared.code_requests import CodeRequest
-from pythoneda.shared.artifact.events import (
+from pythoneda.shared.artifact.events.code import (
     ChangeStagingCodeDescribed,
     ChangeStagingCodeExecutionRequested,
     ChangeStagingCodeExecutionPackaged,
@@ -69,7 +69,7 @@ class NixFlakePackage(EventListener):
         """
         Gets notified of a ChangeStagingCodeDescribed event.
         :param event: The event.
-        :type event: pythoneda.shared.artifact.events.ChangeStagingCodeDescribed
+        :type event: pythoneda.shared.artifact.events.code.ChangeStagingCodeDescribed
         """
         NixFlakePackage.logger().info(f"Received {type(event)}")
         nix_flake = cls.resolve_nix_flake(event.code_request)
@@ -87,7 +87,7 @@ class NixFlakePackage(EventListener):
         """
         Gets notified of a ChangeStagingCodeExecutionRequested event.
         :param event: The event.
-        :type event: pythoneda.shared.artifact_changes.events.ChangeStagingCodeExecutionRequested
+        :type event: pythoneda.shared.artifact.events.code.ChangeStagingCodeExecutionRequested
         """
         NixFlakePackage.logger().info(f"Received {type(event)}")
         nix_flake = cls.resolve_nix_flake_for_execution(event.code_request)
