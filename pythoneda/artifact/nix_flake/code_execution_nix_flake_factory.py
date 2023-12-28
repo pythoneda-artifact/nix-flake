@@ -23,7 +23,8 @@ from pythoneda import BaseObject, Ports
 from pythoneda.shared.code_requests import CodeExecutionNixFlake, PythonedaDependency
 from pythoneda.shared.code_requests.jupyterlab import JupyterlabCodeRequest
 from pythoneda.shared.nix_flake import NixFlakeSpec
-from typing import Dict, List
+from typing import List
+
 
 class CodeExecutionNixFlakeFactory(BaseObject):
 
@@ -46,7 +47,6 @@ class CodeExecutionNixFlakeFactory(BaseObject):
         """
         super().__init__()
 
-
     @classmethod
     def instance(cls):
         """
@@ -59,7 +59,7 @@ class CodeExecutionNixFlakeFactory(BaseObject):
 
         return cls._singleton
 
-    def create(self, codeRequest:JupyterlabCodeRequest, inputs:List) -> CodeExecutionNixFlake:
+    def create(self, codeRequest: JupyterlabCodeRequest, inputs: List) -> CodeExecutionNixFlake:
         """
         Creates a new CodeExecutionNixFlake instance.
         :param codeRequest: The code request.
@@ -73,7 +73,7 @@ class CodeExecutionNixFlakeFactory(BaseObject):
             codeRequest, self.__class__.dependencies_to_inputs(inputs, codeRequest))
 
     @classmethod
-    def dependencies_to_inputs(cls, inputs:List, codeRequest:JupyterlabCodeRequest) -> List:
+    def dependencies_to_inputs(cls, inputs: List, codeRequest: JupyterlabCodeRequest) -> List:
         """
         Converts the dependencies of given code request to a list of NixFlake instances.
         :param codeRequest: The code request.
@@ -86,15 +86,14 @@ class CodeExecutionNixFlakeFactory(BaseObject):
         nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
 
         result = inputs
-        pythonedaDependencies = [
+        pythoneda_dependencies = [
             nix_flake_repo.latest_Nixos(),
             nix_flake_repo.latest_FlakeUtils(),
             nix_flake_repo.latest_PythonedaSharedPythonedaBanner()
         ]
         for dep in codeRequest.dependencies:
-            deps = []
             if isinstance(dep, PythonedaDependency):
-                deps = pythonedaDependencies
+                deps = pythoneda_dependencies
                 if dep.name != "pythoneda-shared-pythoneda-domain":
                     deps.append(nix_flake_repo.latest_PythonedaSharedPythonedaDomain())
             resolved_flake = nix_flake_repo.resolve(NixFlakeSpec(dep.name, dep.version, dep.url))
