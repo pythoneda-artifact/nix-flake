@@ -1,3 +1,4 @@
+# vim: set fileencoding=utf-8
 """
 pythoneda/artifact/nix_flake/jupyterlab/jupyterlab_code_request_nix_flake_factory.py
 
