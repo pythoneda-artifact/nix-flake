@@ -1,6 +1,6 @@
 # vim: set fileencoding=utf-8
 """
-pythoneda/artifact/nix_flake/nix_flake_package.py
+pythoneda/artifact/nix/flake/nix_flake_package.py
 
 This file declares the NixFlakePackage class.
 
@@ -28,7 +28,7 @@ from pythoneda.shared.artifact.events.code import (
     ChangeStagingCodeExecutionPackaged,
     ChangeStagingCodePackaged,
 )
-from pythoneda.shared.nix_flake import NixFlake, NixFlakeSpec, NixFlakeSpecForExecution
+from pythoneda.shared.nix.flake import NixFlake, NixFlakeSpec, NixFlakeSpecForExecution
 
 
 class NixFlakePackage(EventListener):
@@ -41,7 +41,7 @@ class NixFlakePackage(EventListener):
         - Transforms a NixFlake into a runnable package.
 
     Collaborators:
-        - pythoneda.artifact.nix_flake.NixFlake
+        - pythoneda.artifact.nix.flake.NixFlake
     """
 
     _singleton = None
@@ -57,7 +57,7 @@ class NixFlakePackage(EventListener):
         """
         Retrieves the singleton instance.
         :return: Such instance.
-        :rtype: pythoneda.artifact.nix_flake.NixFlakePackage
+        :rtype: pythoneda.artifact.nix.flake.NixFlakePackage
         """
         if cls._singleton is None:
             cls._singleton = cls.initialize()
@@ -105,7 +105,7 @@ class NixFlakePackage(EventListener):
         :param codeRequest: The code request.
         :type codeRequest: pythoneda.shared.code_requests.CodeRequest
         :return: A compatible NixFlake.
-        :rtype: pythoneda.shared.nix_flake.NixFlake
+        :rtype: pythoneda.shared.nix.flake.NixFlake
         """
         nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
         return nix_flake_repo.resolve(codeRequest.nix_flake_spec)
@@ -117,12 +117,14 @@ class NixFlakePackage(EventListener):
         :param codeRequest: The code request.
         :type codeRequest: pythoneda.shared.code_requests.CodeRequest
         :return: A compatible NixFlake.
-        :rtype: pythoneda.shared.nix_flake.NixFlake
+        :rtype: pythoneda.shared.nix.flake.NixFlake
         """
         nix_flake_repo = Ports.instance().resolve(NixFlakeRepo)
         return nix_flake_repo.resolve(
             NixFlakeSpecForExecution(codeRequest.nix_flake_spec)
         )
+
+
 # vim: syntax=python ts=4 sw=4 sts=4 tw=79 sr et
 # Local Variables:
 # mode: python

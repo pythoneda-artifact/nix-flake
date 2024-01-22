@@ -1,8 +1,8 @@
 # vim: set fileencoding=utf-8
 """
-pythoneda/artifact/nix_flake/__init__.py
+pythoneda/artifact/nix/flake/jupyterlab/__init__.py
 
-This file ensures pythoneda.artifact.nix_flake is a package.
+This file ensures pythoneda.artifact.nix.flake.jupyterlab is a package.
 
 Copyright (C) 2023-today rydnr's pythoneda-artifact/nix-flake
 
@@ -21,9 +21,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
-from .nix_flake_repo import NixFlakeRepo
-from .nix_flake_package import NixFlakePackage
-from .code_execution_nix_flake_factory import CodeExecutionNixFlakeFactory
+from .jupyterlab_code_request_nix_flake_factory import (
+    JupyterlabCodeRequestNixFlakeFactory,
+)
+
 # vim: syntax=python ts=4 sw=4 sts=4 tw=79 sr et
 # Local Variables:
 # mode: python
